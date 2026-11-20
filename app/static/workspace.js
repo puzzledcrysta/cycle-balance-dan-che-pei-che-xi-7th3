@@ -93,10 +93,15 @@ async function render() {
   const stage = selected;
   byId('phase').textContent = settings.tabs[stage];
   byId('review').hidden = true;
+  const isHandover = stage === 'handover';
+  byId('handover-desk').hidden = !isHandover;
+  document.querySelector('.grid:not(#handover-desk)').hidden = isHandover;
+  byId('evidence-panel').hidden = isHandover;
   for (const link of links) {
     if (link.dataset.module === stage) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   }
+  if (isHandover) return;
   if (!result) return;
   const id = result.manifest.run_id;
   const raw = row => evidence('来源字段', row.raw);

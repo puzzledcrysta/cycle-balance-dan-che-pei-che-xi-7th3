@@ -13,6 +13,7 @@
 | M3 调度异常 | 定位重复、被替代与矛盾来源 | `POST /api/quality` | `app/modules/quality/versions.py` | `tests/test_quality.py` |
 | M4 调度流量 | 按规则复算并追溯证据 | `POST /api/domain` | `app/modules/domain/rule.py` | `tests/test_domain.py` |
 | M5 运输清单 | 核对独立清单和各类差异 | `POST /api/reconcile` | `app/modules/reconcile/service.py` | `tests/test_reconcile.py` |
+| M5b 班次交接 | 截止时刻区分确认到站/在途/取消并出余缺 | `POST /api/handover` | `app/modules/handover/rule.py` | `tests/test_handover.py` |
 | M6 配车批次 | 打开历史批次并对原文件复跑 | `POST /api/runs` | `app/modules/runs/service.py` | `tests/test_runs.py` |
 | M7 调度签核 | 登记复核结论并下载证据 | `POST /api/review/{run_id}` | `app/modules/review/decisions.py` | `tests/test_review.py` |
 
@@ -33,6 +34,10 @@
 | TRAP-17 | 旧版列名映射 | legacy.csv | `app/modules/contract/schema.py` | `tests/test_contract.py::test_legacy_aliased` |
 | TRAP-18 | 空文件、空白文件与仅表头 | 测试构造 | `app/modules/intake/service.py` | `tests/test_intake.py::test_empty_states` |
 | TRAP-26 | 陈旧复核版本拒绝 | 测试构造 | `app/modules/review/decisions.py` | `tests/test_review.py::test_stale` |
+| TRAP-30 | 晚到记录按提交时间而非到达时刻判定 | events.csv | `app/modules/handover/rule.py` | `tests/test_handover.py::test_late_arrival_listed_as_unreceived_not_confirmed` |
+| TRAP-31 | 在途车只进预测口径，确认口径不重复占位 | departure.csv | `app/modules/handover/rule.py` | `tests/test_handover.py::test_confirmed_vs_projected_kept_apart` |
+| TRAP-32 | 发车后取消冲销移动并退回起点 | events.csv | `app/modules/handover/rule.py` | `tests/test_handover.py::test_cancel_after_departure_returns_to_origin` |
+| TRAP-33 | 同输入重跑命中同一交接快照，不重复结转 | 测试构造 | `app/modules/handover/ledger.py` | `tests/test_handover.py::test_api_replay_does_not_duplicate_carry_forward` |
 | TRAP-109 | reroutes greedy | cases.csv | `app/modules/domain/rule.py` | `tests/test_domain.py::test_reroutes_greedy` |
 | TRAP-110 | unknown station | cases.csv | `app/modules/domain/rule.py` | `tests/test_domain.py::test_unknown_station` |
 

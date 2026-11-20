@@ -12,3 +12,13 @@ REASONS = {
 }
 
 REASONS.update({'CYCLE_STATION': '站点定义无效', 'CYCLE_ROAD': '车路定义无效', 'DATE': '日期格式无效', 'REV_BLOCKED': '较新来源尚未采信'})
+
+REASONS.update({
+    'HANDOVER_TRIP': '调车单事件无效',
+    'HANDOVER_TRANSITION': '车辆状态不能这样变更',
+    'HANDOVER_STATION': '站点与发车单不一致',
+    'HANDOVER_ZONE': '事件调车区与发车单不一致',
+    'HANDOVER_DUP': '交接记录重复登记',
+    'HANDOVER_CUTOFF': '交接截止时刻缺失',
+    'HANDOVER_UNKNOWN': '没有此交接批次',
+})

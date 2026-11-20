@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/static/theme.css">
   <link rel="stylesheet" href="/static/dispatch.css">
   <script type="module" src="/static/workspace.js"></script>
+  <script type="module" src="/static/handover.js"></script>
 </head>
 <body class="dispatch">
   <div class="workbench">
@@ -59,6 +60,40 @@
       <div class="panel__head"><h2>真实调车路由</h2><span class="num" id="evidence-key"></span></div>
       <div class="panel__body" id="signal" aria-live="polite"><p class="empty">选择一条复算记录</p></div>
     </article></div>
+    <div class="grid" id="handover-desk" hidden>
+      <section class="panel source" aria-labelledby="handover-input-title">
+        <div class="panel__head"><h2 id="handover-input-title">交接输入</h2><small>期初 / 发车 / 事件</small></div>
+        <form id="handover-form" class="panel__body">
+          <div class="actions"><button type="submit" class="btn btn--primary">生成交接单</button>
+          <button type="button" id="handover-sample" class="btn">载入交接样例</button></div>
+          <details open><summary>三份交接 CSV 与截止时刻</summary>
+            <label>期初余额 <input id="ho-opening-file" type="file" accept=".csv,text/csv"></label>
+            <textarea id="ho-opening" aria-label="期初余额 CSV" rows="3"></textarea>
+            <label>发车单 <input id="ho-departure-file" type="file" accept=".csv,text/csv"></label>
+            <textarea id="ho-departure" aria-label="发车单 CSV" rows="4"></textarea>
+            <label>到达/取消事件 <input id="ho-event-file" type="file" accept=".csv,text/csv"></label>
+            <textarea id="ho-event" aria-label="事件 CSV" rows="4"></textarea>
+            <label>交接截止时刻（留空按最早发车日 07:00 +08:00）
+              <input id="ho-cutoff" type="text" placeholder="2026-11-20T07:00:00+08:00"></label>
+          </details>
+          <output id="ho-notice" role="status"></output>
+        </form>
+      </section>
+      <section class="panel results" aria-labelledby="handover-phase">
+        <div class="panel__head"><h2 id="handover-phase">班次交接单</h2><span class="num" id="ho-id"></span></div>
+        <div class="filters" id="ho-tabs">
+          <button type="button" class="btn ho-view" data-view="zones" aria-pressed="true">分区余缺</button>
+          <button type="button" class="btn ho-view" data-view="trips" aria-pressed="false">车辆状态</button>
+          <button type="button" class="btn ho-view" data-view="stations" aria-pressed="false">站点余额</button>
+          <button type="button" class="btn ho-view" data-view="issues" aria-pressed="false">隔离与晚到</button>
+        </div>
+        <div class="scroll" id="ho-grid"><p class="empty">生成后下一班可照此派车</p></div>
+      </section>
+      <article class="panel signal" id="ho-summary-panel">
+        <div class="panel__head"><h2>交接口径</h2><span class="num" id="ho-cutoff-label"></span></div>
+        <div class="panel__body" id="ho-summary" aria-live="polite"><p class="empty">确认与预测分列，不混算</p></div>
+      </article>
+    </div>
       </main>
       <footer class="statusbar"><span id="state" role="status">等待输入</span><a href="/openapi.json">接口</a><span>UTC</span></footer>
     </div>

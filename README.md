@@ -17,7 +17,8 @@ docker compose up --build
 1. 检查「晨班盘点」与「站点字段」，定位导入坏行与字段归一结果。
 2. 在「调度异常」区分冲突、业务拒绝、重传与旧版本。
 3. 打开「调度流量」并点击任意记录的「查看依据」。
-4. 在「运输清单」检查金额或用量差异。通过「配车批次」复算原文件，通过「调度签核」提交意见并下载证据。
+4. 在「班次交接」上传期初余额、发车单与到达/取消事件，按截止时刻生成确认/预测双口径交接单，下一班照确认余缺派车。
+5. 在「运输清单」检查金额或用量差异。通过「配车批次」复算原文件，通过「调度签核」提交意见并下载证据。
 
 接口定义见 `/openapi.json`。字段、允许区间及算例见 [数据字典](docs/DATA-DICTIONARY.md)，模块和回归测试见 [测试登记](docs/DEPTH.md)。
 
@@ -28,4 +29,4 @@ docker compose config --quiet
 docker compose exec -T app pytest -q
 ```
 
-`sample_data/shift.csv` 是班次数据，`sample_data/external.csv` 是独立账样例。`cases.csv` 固定业务反例，`legacy.csv` 和 `truncated.csv` 用于验证历史格式与断行。
+`sample_data/shift.csv` 是班次数据，`sample_data/external.csv` 是独立账样例。`cases.csv` 固定业务反例，`legacy.csv` 和 `truncated.csv` 用于验证历史格式与断行。班次交接样例为 `opening.csv`（期初余额）、`departure.csv`（发车单）和 `events.csv`（到达/取消事件，含七点半后回传、重传、取消与坏行）。

@@ -50,8 +50,31 @@ class Review(BaseModel):
     note: str = Field(default='',max_length=500)
 
 
+class Handover(BaseModel):
+    opening: CsvText | None = None
+    opening_base64: EncodedCsv | None = None
+    departure: CsvText | None = None
+    departure_base64: EncodedCsv | None = None
+    event: CsvText | None = None
+    event_base64: EncodedCsv | None = None
+    cutoff: str | None = Field(default=None, max_length=40)
+
+    def _bytes(self, text, encoded, sample):
+        return input_bytes(text, encoded, SAMPLE_ROOT/sample)
+
+    def opening_bytes(self):
+        return self._bytes(self.opening, self.opening_base64, 'opening.csv')
+
+    def departure_bytes(self):
+        return self._bytes(self.departure, self.departure_base64, 'departure.csv')
+
+    def event_bytes(self):
+        return self._bytes(self.event, self.event_base64, 'events.csv')
+
+
 def read_sample(name):
-    choices = {'shift':'shift.csv','external':'external.csv'}
+    choices = {'shift':'shift.csv','external':'external.csv',
+               'opening':'opening.csv','departure':'departure.csv','events':'events.csv'}
     if name not in choices:
         raise DataError('DEMO_UNKNOWN','没有此样例',404)
     return SAMPLE_ROOT.joinpath(choices[name]).read_bytes()

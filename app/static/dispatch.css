@@ -107,6 +107,13 @@ td details { min-width: 5em; margin-top: 4px; color: var(--muted); border-left: 
 .signal .route li { padding: 12px 6px; border-bottom: 1px solid #cdb09d; }
 .signal .route .measure { padding: 3px 7px; background: #f3decf; border-radius: 5px; }
 
+#handover-desk { grid-template-areas: "source table proof"; }
+#handover-desk form label { display: grid; gap: 4px; margin: 8px 0; }
+#ho-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: var(--pad); border-bottom: 1px solid var(--line); }
+#ho-tabs .btn[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.panel-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.panel-list li { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px dashed var(--line); padding-bottom: 6px; }
+.panel-list .measure { font-variant-numeric: tabular-nums; }
 @media(max-width: 980px) {
   .dispatch .grid { grid-template-columns: minmax(0,1fr) minmax(0,1fr); grid-template-areas: "source proof" "table table"; }
 }
